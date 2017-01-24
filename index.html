@@ -19,18 +19,23 @@
     <div class="form-group">
       <label>
         Due Date
-        <input type="text" ng-model="todo.dueDate" required>
+        <input type="date" ng-model="todo.dueDate" required>
       </label>
-    </div>
     <button type="submit" name="button">Create To-Do</button>
   </form>
+
+  <a class="pull-right btn btn-danger" ng-click="destroyCompletedTodos()">Remove Completed</a>
 
   <table class="table">
     <tr ng-repeat="item in items">
       <td>{{ item.text }}</td>
       <td>{{ item.dueDate | date }}</td>
-      <td ng-if="item.completed">Item completed.</td>
-      <td ng-if="!item.completed">Not completed. One day this will be a checkbox.</td>
+      <td>
+        <input type="checkbox" ng-model="item.completed" ng-change="toggleCompletion(item)">
+      </td>
+      <td>
+        <span ng-click="deleteTodo(item)">X</span>
+      </td>
     </tr>
   </table>
 
