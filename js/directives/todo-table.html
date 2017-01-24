@@ -1,5 +1,5 @@
 <table class="table">
-  <tr ng-repeat="item in items | toggleCompleted : hideCompleted ">
+  <tr ng-repeat="item in items | toggleCompleted : hideCompleted | orderBy : sorting.sortValue ">
     <td>{{ item.text }}</td>
     <td>{{ item.dueDate | date }}</td>
     <td>{{ item.completed }}</td>

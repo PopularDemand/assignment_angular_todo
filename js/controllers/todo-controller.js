@@ -1,24 +1,37 @@
 todo.controller('TodoController', ['$scope', 'todoService', function($scope, todoService) {
 
   $scope.items = todoService.getAll();
+  $scope.sortingOptions = [
+    { text: "None",
+      sortValue: ""
+    },
+    { text: "Completed on Top",
+      sortValue: "-completed"
+    },
+    { text: "Completed on Bottom",
+      sortValue: "completed"
+    },
+    { text: "Due Date Descending",
+      sortValue: "-dueDate"
+    },
+    { text: "Due Date Ascending",
+      sortValue: "dueDate"
+    }
+  ];
 
   $scope.processForm = function(isValid) {
-    todoService.processForm(isValid);
+    if (isValid) {
+      todoService.addTodo($scope.todo);
+      $scope.todo.dueDate = undefined;
+      $scope.todo.text = undefined;
+    }
   };
 
   $scope.deleteTodo = function(todo) {
-    var index = $scope.items.indexOf(todo);
-    if (index !== -1) {
-      $scope.items.splice(index, 1);
-    }
+    todoService.deleteTodo(todo);
   };
 
-  $scope.destroyCompletedTodos = function() {
-    for(var i = $scope.items.length - 1; i >= 0; i--) {
-      if ($scope.items[i].completed === true) {
-        $scope.items.splice(i, 1);
-      }
-    }
-  };
+  $scope.destroyCompletedTodos = todoService.destroyCompleted;
 
 }]);
+

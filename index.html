@@ -10,25 +10,44 @@
 <body ng-controller="TodoController">
   <div class="container">
     <div class="row">
-      <form name="newTodo" ng-submit="processForm(newTodo.$valid)">
+      <div class="col-xs-6 pull-right form-group">
+        Current sorting: {{ sorting.text }}
+        <select ng-model="sorting" ng-options="option.text for option in sortingOptions" class="pull-right form-control"></select>
+      </div>
+
+      <!-- Todo Form -->
+      <form name="newTodo" ng-submit="processForm(newTodo.$valid)" class="col-xs-6">
+
         <div class="form-group">
           <label>
             Text
-            <input type="text" ng-model="todo.text" required>
+            <input type="text" ng-model="todo.text" class="form-control" required>
           </label>
         </div>
         <div class="form-group">
           <label>
             Due Date
-            <input type="date" ng-model="todo.dueDate" required>
+            <input type="date" ng-model="todo.dueDate" class="form-control" required>
           </label>
-        <button type="submit" name="button">Create To-Do</button>
+        </div>
+        <div class="form-group">
+          <button type="submit" name="button" class="btn btn-primary">Create To-Do</button>
+        </div>
+
       </form>
 
-      <a class="pull-right btn btn-info" ng-model="hideCompleted" ng-click="hideCompleted = !hideCompleted">{{ hideCompleted ? "Show" : "Hide" }} Completed</a>
+      <!-- Completion Buttons -->
+<div class="col-xs-6">
+  <div class="form-group">
+    <a class="btn btn-info" ng-model="hideCompleted" ng-click="hideCompleted = !hideCompleted">{{ hideCompleted ? "Show" : "Hide" }} Completed</a>
+  </div>
+  
+  <div class="form-group">
+    <a class="btn btn-danger" ng-click="destroyCompletedTodos()">Remove Completed</a>
+  </div>
+</div>
 
-      <a class="pull-right btn btn-danger" ng-click="destroyCompletedTodos()">Remove Completed</a>
-
+      <!-- Table directive -->
       <todo-table></todo-table>
 
     </div>
