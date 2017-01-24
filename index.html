@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="toDo">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Angular To Do</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+</head>
+<body ng-controller="ToDoController">
+
+  <form name="newToDo" ng-submit="processForm(newToDo.$valid)">
+    <div class="form-group">
+      <label>
+        Text
+        <input type="text" ng-model="todo.text" required>
+      </label>
+    </div>
+    <div class="form-group">
+      <label>
+        Due Date
+        <input type="text" ng-model="todo.dueDate" required>
+      </label>
+    </div>
+    <button type="submit" name="button">Create To-Do</button>
+  </form>
+
+  <table class="table">
+    <tr ng-repeat="item in items">
+      <td>{{ item.text }}</td>
+      <td>{{ item.dueDate | date }}</td>
+      <td ng-if="item.completed">Item completed.</td>
+      <td ng-if="!item.completed">Not completed. One day this will be a checkbox.</td>
+    </tr>
+  </table>
+
+  <script src="/js/app.js"></script>
+
+  <!-- controllers -->
+  <script src="/js/controllers/todo-controller.js"></script>
+
+</body>
+</html>
