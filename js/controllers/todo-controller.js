@@ -1,43 +1,9 @@
-toDo.controller('ToDoController', ['$scope', function($scope) {
+todo.controller('TodoController', ['$scope', 'todoService', function($scope, todoService) {
 
-  $scope.items = [
-    {
-      text: "Get groceries from the store",
-      dueDate: new Date(),
-      completed: false
-    },
-    {
-      text: "Get groceries from the store",
-      dueDate: new Date(),
-      completed: false
-    },
-    {
-      text: "Get groceries from the store",
-      dueDate: new Date(),
-      completed: false
-    },
-    {
-      text: "Get groceries from the store",
-      dueDate: new Date(),
-      completed: false
-    }
-  ];
+  $scope.items = todoService.getAll();
 
   $scope.processForm = function(isValid) {
-    if (isValid) {
-      var newItem = {
-        text: $scope.todo.text,
-        dueDate: $scope.todo.dueDate,
-        completed: false
-      };
-      $scope.items.push(newItem);
-      $scope.todo.dueDate = undefined;
-      $scope.todo.text = undefined;
-    }
-  };
-
-  $scope.toggleCompletion = function(todo) {
-    todo.complete = todo.complete ? false : true
+    todoService.processForm(isValid);
   };
 
   $scope.deleteTodo = function(todo) {
@@ -48,17 +14,11 @@ toDo.controller('ToDoController', ['$scope', function($scope) {
   };
 
   $scope.destroyCompletedTodos = function() {
-    console.log('in destory completed')
-    for(var i = $scope.items.length; i >= 0; i--) {
+    for(var i = $scope.items.length - 1; i >= 0; i--) {
       if ($scope.items[i].completed === true) {
         $scope.items.splice(i, 1);
       }
     }
-  }
+  };
 
-  // $scope.item = {
-  //   text: "Get groceries from the store",
-  //   dueDate: new Date(),
-  //   completed: false
-  // };
 }]);

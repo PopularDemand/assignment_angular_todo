@@ -1,0 +1,13 @@
+<table class="table">
+  <tr ng-repeat="item in items | toggleCompleted : hideCompleted ">
+    <td>{{ item.text }}</td>
+    <td>{{ item.dueDate | date }}</td>
+    <td>{{ item.completed }}</td>
+    <td>
+      <input type="checkbox" ng-model="item.completed">
+    </td>
+    <td>
+      <span ng-click="deleteTodo(item)">X</span>
+    </td>
+  </tr>
+</table>

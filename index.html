@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="toDo">
+<html lang="en" ng-app="todo">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,39 +7,44 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
 </head>
-<body ng-controller="ToDoController">
+<body ng-controller="TodoController">
+  <div class="container">
+    <div class="row">
+      <form name="newTodo" ng-submit="processForm(newTodo.$valid)">
+        <div class="form-group">
+          <label>
+            Text
+            <input type="text" ng-model="todo.text" required>
+          </label>
+        </div>
+        <div class="form-group">
+          <label>
+            Due Date
+            <input type="date" ng-model="todo.dueDate" required>
+          </label>
+        <button type="submit" name="button">Create To-Do</button>
+      </form>
 
-  <form name="newToDo" ng-submit="processForm(newToDo.$valid)">
-    <div class="form-group">
-      <label>
-        Text
-        <input type="text" ng-model="todo.text" required>
-      </label>
+      <a class="pull-right btn btn-info" ng-model="hideCompleted" ng-click="hideCompleted = !hideCompleted">{{ hideCompleted ? "Show" : "Hide" }} Completed</a>
+
+      <a class="pull-right btn btn-danger" ng-click="destroyCompletedTodos()">Remove Completed</a>
+
+      <todo-table></todo-table>
+
     </div>
-    <div class="form-group">
-      <label>
-        Due Date
-        <input type="date" ng-model="todo.dueDate" required>
-      </label>
-    <button type="submit" name="button">Create To-Do</button>
-  </form>
+  </div>
 
-  <a class="pull-right btn btn-danger" ng-click="destroyCompletedTodos()">Remove Completed</a>
-
-  <table class="table">
-    <tr ng-repeat="item in items">
-      <td>{{ item.text }}</td>
-      <td>{{ item.dueDate | date }}</td>
-      <td>
-        <input type="checkbox" ng-model="item.completed" ng-change="toggleCompletion(item)">
-      </td>
-      <td>
-        <span ng-click="deleteTodo(item)">X</span>
-      </td>
-    </tr>
-  </table>
 
   <script src="/js/app.js"></script>
+
+  <!-- filters -->
+  <script src="/js/filters/toggle-completed.js"></script>
+
+  <!-- directive -->
+  <script src="/js/directives/todo-table.js"></script>
+
+  <!-- services -->
+  <script src="/js/services/todo-service.js"></script>
 
   <!-- controllers -->
   <script src="/js/controllers/todo-controller.js"></script>
